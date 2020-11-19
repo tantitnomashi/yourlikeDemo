@@ -3,6 +3,7 @@ var src;
 var btnUrl = document.getElementById('btn-url');
 var btnWithDraw = document.getElementById('btn-withdraw');
 var btnLogout = document.getElementById('btn-logout');
+var btnLiked = document.getElementById('btn-liked');
 function onLoadPage() {
 	fixInfo();
 	if (!localStorage.getItem('url')) {
@@ -51,6 +52,11 @@ function createData() {
 	}
 
 	openPopUp();
+
+
+	// create liked list in local storage 
+	var arr = [];
+	localStorage.setItem('likedList', JSON.stringify(arr));
 }
 function createElementCustom(tag, className) {
 	//   console.log("Start create a element");
@@ -98,6 +104,30 @@ function drawPost(obj, index) {
 	divWrap.appendChild(divCard);
 	document.getElementById("list-post").appendChild(divWrap);
 }
+
+function drawLikedList() {
+	document.getElementById('div-liked-post').innerHTML = "";
+	var list = JSON.parse(localStorage.getItem("likedList"));
+	for (var i = 0; i < list.length; i++) {
+		drawAlogActivity(list[i]);
+	}
+
+}
+function drawAlogActivity(obj) {
+	let div = createElementCustom('div', ['row', 'px-0', 'mb-3']);
+	let divL = createElementCustom('div', ['col-sm-4']);
+	let a = createElementCustom('a', ['aaa']);
+	a.href = obj.link;
+	a.innerHTML = "Like post";
+	a.target = "_blank";
+	divL.appendChild(a);
+	let divR = createElementCustom('div', ['col-sm-8']);
+	divR.innerHTML = obj.time;
+	div.appendChild(divL);
+	div.appendChild(divR);
+	document.getElementById('div-liked-post').appendChild(div);
+
+}
 function openPopUp() {
 	var links = document.getElementsByClassName("link-post");
 	Array.from(links).forEach(function (element) {
@@ -110,6 +140,15 @@ function openPopUp() {
 			setTimeout(addPoint, 7000, src.target.dataset.credit);
 			$("#card" + src.target.dataset.index + " button").attr('disabled', 'disabled');
 			$("#card" + src.target.dataset.index + " button").html("Liked !");
+
+			var list = JSON.parse(localStorage.getItem("likedList"));
+			var obj = {
+				link: src.target.dataset.link,
+				time: new Date().toLocaleString()
+			}
+			list.push(obj);
+			localStorage.setItem('likedList', JSON.stringify(list));
+
 			return window.open(src.target.dataset.link, "", 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
 			//window.open(src, "", "width=600,height=600");
 		});
@@ -162,6 +201,10 @@ btnWithDraw.addEventListener('click', () => {
 
 // })
 
+btnLiked.addEventListener('click', () => {
+
+	drawLikedList();
+})
 btnLogout.addEventListener('click', () => {
 
 	FB.logout(() => {

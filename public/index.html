@@ -106,7 +106,6 @@
 				console.log('Successful login id: ' + response.id);
 				// document.getElementById('status').innerHTML =
 				// 	'Thanks for logging in, ' + response.name + '!';
-
 				localStorage.setItem('user', response.name);
 				localStorage.setItem('userId', response.id);
 				location.replace("main.html");
@@ -114,18 +113,12 @@
 			});
 		}
 	</script>
-
-
 	<!-- The JS SDK Login Button -->
-
-
 	<div id="status">
 	</div>
-
 	<!-- Load the JS SDK asynchronously -->
 	<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/all.js"></script>
 	<div id="root"></div>
-
 </body>
 
 </html>
