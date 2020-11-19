@@ -8,12 +8,12 @@ function createData() {
 		"https://www.facebook.com/vietnambusinessinsider/photos/a.327582801301444/746300772762976",
 		"https://www.facebook.com/vietnambusinessinsider/photos/a.327582801301444/746257959433924",
 		"https://www.facebook.com/vietnambusinessinsider/photos/a.327582801301444/745693049490415",
-		"https://www.facebook.com/vietnambusinessinsider/photos/a.327582801301444/745672452825808"];
+		"https://www.facebook.com/vietnambusinessinsider/photos/a.327582801301444/745392179520502/"];
 
 	var authors = ['Tan Tran M.', 'Thuan Phan', 'Nguyen N. Tien', 'Nhan NT', 'Phan D Tue'];
 
 	var titles = ["Trận chiến dừa đóng hộp", "Air Asia Nhật Bản phá sản", "Gojek tăng trương 10% ", "Iphone 12 liên tục gặp lỗi",
-		"Google bị kiện", "Bkav xuất khẩu camera an ninh qua Mĩ", "Elon Musk giàu thứ 3 thế giới"];
+		"Google bị kiện", "Bkav xuất khẩu camera an ninh qua Mĩ", "Grab đầu tư vào start up fintech"];
 
 	var listPost = links.map((link, index) => {
 		var i = index;
