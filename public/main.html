@@ -109,13 +109,15 @@
 					</div>
 					<div class="modal-body">
 						Please input the amount you want to withdraw !
+						<br>
+						<span id="err" style="color: red;">Exceed the balance ! Try again! </span>
 						<input id="amount-money" class="form-control form-control-lg" type="number" min="0" max="5000"
 							placeholder="$">
 
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-						<button type="submit" id="btn-withdraw" class="btn btn-primary">Withdraw</button>
+						<button type="button" id="btn-withdraw" class="btn btn-primary">Withdraw</button>
 					</div>
 				</div>
 			</div>

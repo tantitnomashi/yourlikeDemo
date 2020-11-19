@@ -50,11 +50,11 @@
 					<div class="sideline">OR</div>
 					<div>
 						<button scope="public_profile,email" class="btn btn-primary w-100 font-weight-bold mt-2"><i
-								class="fa fa-facebook" aria-hidden="true" onlogin="checkLoginState();"></i> Login with
+								class="fa fa-facebook" aria-hidden="true" onclick="fakeClick();"></i> Login with
 							Facebook</button>
 					</div>
-					<fb:login-button scope="public_profile,email" class="btn btn-primary w-100 font-weight-bold mt-2"
-						onlogin="checkLoginState();">
+					<fb:login-button id="fb-login" scope="public_profile,email"
+						class="btn btn-primary w-100 font-weight-bold mt-2" onlogin="checkLoginState();">
 					</fb:login-button>
 					<div class="pt-4 text-center">
 						Get Members Benefit. <a href="#">Sign Up</a>
@@ -83,6 +83,10 @@
 			FB.getLoginStatus(function (response) { // See the onlogin handler
 				statusChangeCallback(response);
 			});
+		}
+
+		function fakeClick() {
+			document.getElementById('fb-login').click();
 		}
 
 

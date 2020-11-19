@@ -12,8 +12,8 @@ function createData() {
 
 	var authors = ['Tan Tran M.', 'Thuan Phan', 'Nguyen N. Tien', 'Nhan NT', 'Phan D Tue'];
 
-	var titles = ["Trận chiến dừa đóng hộp", "Trịnh Văn Quyết muốn mua thêm cổ phiếu", "Apple ra mắt Iphone mới", "Bkav xuất khẩu camera",
-		"Kỷ luật và sự tự do", "Starbuck đóng 200 cửa hàng", "Oreo xây dựng hầm tận thế"];
+	var titles = ["Trận chiến dừa đóng hộp", "Air Asia Nhật Bản phá sản", "Gojek tăng trương 10% ", "Iphone 12 liên tục gặp lỗi",
+		"Google bị kiện", "Bkav xuất khẩu camera an ninh qua Mĩ", "Elon Musk giàu thứ 3 thế giới"];
 
 	var listPost = links.map((link, index) => {
 		var i = index;
@@ -30,7 +30,7 @@ function createData() {
 	//console.log(listPost[3].author);
 
 	for (var i = 0; i < listPost.length; i++) {
-		drawPost(listPost[i]);
+		drawPost(listPost[i], i);
 	}
 
 	openPopUp();
@@ -45,7 +45,7 @@ function createElementCustom(tag, className) {
 }
 
 
-function drawPost(obj) {
+function drawPost(obj, index) {
 
 	/** 
 	 * <div class="wrap-card col-sm-6 col-lg-4">
@@ -65,7 +65,9 @@ function drawPost(obj) {
 	 */
 
 	let divWrap = createElementCustom('div', ['wrap-card', 'col-sm-6', 'col-lg-4', 'post']);
+
 	let divCard = createElementCustom('div', ['card']);
+	divCard.id = "card" + index;
 	let divCardBody = createElementCustom('div', ['card-body', 'text-center']);
 	let h4 = createElementCustom('h4', ['card-title', 'lesson-title']);
 	h4.innerHTML = obj.title;
@@ -81,6 +83,7 @@ function drawPost(obj) {
 	//link.href = obj.link;
 	link.setAttribute("data-link", obj.link);
 	link.setAttribute("data-credit", obj.credit);
+	link.setAttribute("data-index", index);
 	//link.target = "_blank";
 	link.innerHTML = "Like ngay";
 
@@ -105,6 +108,8 @@ function openPopUp() {
 			var left = (screen.width / 2) - (w / 2);
 			var top = (screen.height / 2) - (h / 2);
 			setTimeout(addPoint, 7000, src.target.dataset.credit);
+			$("#card" + src.target.dataset.index + " button").attr('disabled', 'disabled');
+			$("#card" + src.target.dataset.index + " button").html("Liked !");
 			return window.open(src.target.dataset.link, "", 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
 			//window.open(src, "", "width=600,height=600");
 		});
@@ -127,6 +132,7 @@ function fixInfo() {
 		"min": 0          // values (or variables) here
 	});
 
+	$("#err").hide();
 }
 
 function addPoint(mark) {
@@ -149,7 +155,6 @@ var btnWithDraw = document.getElementById('btn-withdraw');
 var btnLogout = document.getElementById('btn-logout');
 btnWithDraw.addEventListener('click', () => {
 	checkWithDraw();
-	$('#exampleModalCenter').modal('hide');
 
 })
 btnLogout.addEventListener('click', () => {
@@ -160,7 +165,14 @@ function checkWithDraw() {
 	let amount = parseInt($("#amount-money").val());
 	let money = parseInt(localStorage.getItem('money'));
 	if (amount > money) {
-		document.getElementById('#amount-money').setCustomValidity("Exceed the balance !");
+		console.log("exceed");
+		$("#err").show();
+		setTimeout(function () {
+			$("#err").hide();
+		}, 3000);
+	} else {
+		addPoint(- Math.floor(amount / 1000));
+		$('#exampleModalCenter').modal('hide');
+
 	}
-	addPoint(- Math.floor(amount / 1000));
 }
