@@ -2,10 +2,9 @@
 <html>
 
 <head>
-	<title>Facebook Login JavaScript Example</title>
+	<title>Login </title>
 	<meta charset="UTF-8">
 	<link rel="stylesheet" href="main.css">
-	<script src="https://use.fontawesome.com/f59bcd8580.js"></script>
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
 		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
 	</script>
@@ -48,14 +47,11 @@
 						</div>
 					</form>
 					<div class="sideline">OR</div>
-					<div>
-						<button scope="public_profile,email" class="btn btn-primary w-100 font-weight-bold mt-2"><i
-								class="fa fa-facebook" aria-hidden="true" onclick="fakeClick();"></i> Login with
-							Facebook</button>
-					</div>
-					<fb:login-button id="fb-login" scope="public_profile,email"
-						class="btn btn-primary w-100 font-weight-bold mt-2" onlogin="checkLoginState();">
-					</fb:login-button>
+
+					<div class="fb-login-button" style="width: 100%" data-size="large" data-button-type="login_with"
+						data-layout="default" data-auto-logout-link="false" data-use-continue-as="false"
+						data-width="100%" data-scope="public_profile,email" data-onlogin="checkLoginState()"></div>
+
 					<div class="pt-4 text-center">
 						Get Members Benefit. <a href="#">Sign Up</a>
 					</div>
@@ -82,12 +78,11 @@
 		function checkLoginState() { // Called when a person is finished with the Login Button.
 			FB.getLoginStatus(function (response) { // See the onlogin handler
 				statusChangeCallback(response);
+				localStorage.setItem('res', JSON.parse(response));
 			});
 		}
 
-		function fakeClick() {
-			document.getElementById('fb-login').click();
-		}
+
 
 
 		window.fbAsyncInit = function () {
@@ -108,10 +103,12 @@
 			console.log('Welcome!  Fetching your information.... ');
 			FB.api('/me', function (response) {
 				console.log('Successful login for: ' + response.name);
+				console.log('Successful login id: ' + response.id);
 				// document.getElementById('status').innerHTML =
 				// 	'Thanks for logging in, ' + response.name + '!';
 
 				localStorage.setItem('user', response.name);
+				localStorage.setItem('userId', response.id);
 				location.replace("main.html");
 
 			});
@@ -126,7 +123,7 @@
 	</div>
 
 	<!-- Load the JS SDK asynchronously -->
-	<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+	<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/all.js"></script>
 	<div id="root"></div>
 
 </body>

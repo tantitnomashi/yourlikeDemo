@@ -1,7 +1,24 @@
 var src;
+
+var btnUrl = document.getElementById('btn-url');
+var btnWithDraw = document.getElementById('btn-withdraw');
+var btnLogout = document.getElementById('btn-logout');
+function onLoadPage() {
+	fixInfo();
+	if (!localStorage.getItem('url')) {
+		$("#user-url-div").show();
+		$("#list-post").hide();
+	} else {
+		$("#user-url-div").hide();
+		$("#list-post").show();
+		createData();
+	}
+
+}
+
 function createData() {
 
-	fixInfo();
+
 	var links = ["https://www.facebook.com/vietnambusinessinsider/photos/a.327582801301444/734300507296336/",
 		"https://www.facebook.com/vietnambusinessinsider/photos/a.327582801301444/746472509412469/",
 		"https://www.facebook.com/vietnambusinessinsider/photos/a.327582801301444/746304976095889",
@@ -46,23 +63,6 @@ function createElementCustom(tag, className) {
 
 
 function drawPost(obj, index) {
-
-	/** 
-	 * <div class="wrap-card col-sm-6 col-lg-4">
-						<div id="#" class="card">
-							<div class="card-body">
-								<h4 id="" class="card-title lesson-title ">IQ Math: Find Prime Number</h4>
-								<div class="row px-0 mb-3">
-									<h5 id="author" class="col-sm-7 creator">Tran M. Tan</h5>
-									<h5 id="subject" class="col-sm-5 text-right subject">Math </h5>
-								</div>
-								<a id="like-now" target="_blank" href="waiting.html" class="btn btn-primary float-left">Like
-									now</a>
-	
-							</div>
-						</div>
-					</div>
-	 */
 
 	let divWrap = createElementCustom('div', ['wrap-card', 'col-sm-6', 'col-lg-4', 'post']);
 
@@ -151,15 +151,36 @@ function addPoint(mark) {
 
 }
 
-var btnWithDraw = document.getElementById('btn-withdraw');
-var btnLogout = document.getElementById('btn-logout');
+
 btnWithDraw.addEventListener('click', () => {
 	checkWithDraw();
 
 })
+// btnLogout.addEventListener('click', () => {
+// 	localStorage.clear();
+// 	location.replace("index.html");
+
+// })
+
 btnLogout.addEventListener('click', () => {
-	localStorage.clear();
-	location.replace("index.html");
+
+	FB.logout(() => {
+		localStorage.clear();
+		location.replace("index.html");
+	});
+})
+btnUrl.addEventListener('click', () => {
+	var url = $("#url-fb").val();
+	if (url.length > 10) {
+		localStorage.setItem('url', url);
+		$("#user-url-div").hide();
+		$("#list-post").show();
+		createData();
+	} else {
+		document.getElementById('url-fb').setCustomValidity("Invalid Facbook Url");
+		console.log("aaaa");
+	}
+
 })
 function checkWithDraw() {
 	let amount = parseInt($("#amount-money").val());
