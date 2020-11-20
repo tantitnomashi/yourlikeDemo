@@ -148,7 +148,6 @@ function openPopUp() {
 			}
 			list.push(obj);
 			localStorage.setItem('likedList', JSON.stringify(list));
-
 			return window.open(src.target.dataset.link, "", 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);
 			//window.open(src, "", "width=600,height=600");
 		});
